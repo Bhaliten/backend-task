@@ -1,15 +1,15 @@
 package com.euromacc.euromaccservice.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.lang.NonNull;
 
 @Data
 @Builder
 public class CreateUserRequest {
-    @NonNull
+    @NotBlank(message = "firstName is required")
     String firstName;
-    @NonNull
+    @NotBlank(message = "lastName is required")
     String lastName;
     String email;
 }

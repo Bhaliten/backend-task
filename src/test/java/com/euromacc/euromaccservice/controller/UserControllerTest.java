@@ -40,6 +40,22 @@ class UserControllerTest {
     }
 
     @Test
+    void saveWithoutNames() {
+        CreateUserRequest createUserRequest = CreateUserRequest.builder()
+                .email("email@gmail.com")
+                .build();
+
+        this.client.post()
+                .uri("/api/elasticsearch/create")
+                .bodyValue(createUserRequest)
+                .exchange()
+                .expectStatus()
+                .isBadRequest()
+                ;
+
+    }
+
+    @Test
     void search() {
     }
 }
