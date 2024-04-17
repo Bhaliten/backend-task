@@ -1,12 +1,13 @@
 package com.euromacc.euromaccservice.mapper;
 
 import com.euromacc.euromaccservice.dto.CreateUserRequest;
-import com.euromacc.euromaccservice.model.UserResponse;
+import com.euromacc.euromaccservice.dto.UserResponse;
+import com.euromacc.euromaccservice.model.User;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface IUserMapper {
 
-    com.euromacc.euromaccservice.dto.UserResponse map(UserResponse user);
-    UserResponse map(CreateUserRequest user);
+    UserResponse map(User user);
+    User map(CreateUserRequest user);
 }
