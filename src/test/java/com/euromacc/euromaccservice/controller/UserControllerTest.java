@@ -74,7 +74,14 @@ class UserControllerTest {
                 .expectStatus()
                 .isOk()
                 .expectBody(UserSearchResponse.class)
-                .value(Assertions::assertNotNull)
+                .value(userSearchResponse -> {
+                    Assertions.assertEquals(userSearchResponse.getTotal(), userSearchResponse.getUserList().size());
+                    userSearchResponse.getUserList().forEach(user -> {
+                        Assertions.assertNotNull(user.getId());
+                        Assertions.assertTrue(user.getFirstName().toLowerCase().contains(userSearchRequest.getFirstName()));
+                        Assertions.assertTrue(user.getLastName().toLowerCase().contains(userSearchRequest.getLastName()));
+                    });
+                })
         ;
     }
 
