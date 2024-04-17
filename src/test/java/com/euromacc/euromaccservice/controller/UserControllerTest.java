@@ -2,6 +2,8 @@ package com.euromacc.euromaccservice.controller;
 
 import com.euromacc.euromaccservice.dto.CreateUserRequest;
 import com.euromacc.euromaccservice.dto.UserResponse;
+import com.euromacc.euromaccservice.dto.UserSearchRequest;
+import com.euromacc.euromaccservice.dto.UserSearchResponse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,11 +53,38 @@ class UserControllerTest {
                 .exchange()
                 .expectStatus()
                 .isBadRequest()
-                ;
+        ;
 
     }
 
     @Test
     void search() {
+        UserSearchRequest userSearchRequest = UserSearchRequest.builder().lastName("last").firstName("first").build();
+        this.client.get()
+                .uri(uriBuilder ->
+                        uriBuilder
+                                .path("/api/elasticsearch/search")
+                                .queryParam("firstName", userSearchRequest.getFirstName())
+                                .queryParam("lastName", userSearchRequest.getLastName())
+                                .build())
+                .exchange()
+                .expectStatus()
+                .isOk()
+                .expectBody(UserSearchResponse.class)
+                .value(Assertions::assertNotNull)
+        ;
+    }
+
+
+    @Test
+    void searchWithoutNames() {
+        this.client.get()
+                .uri(uriBuilder ->
+                        uriBuilder
+                                .path("/api/elasticsearch/search")
+                                .build())
+                .exchange()
+                .expectStatus()
+                .isBadRequest();
     }
 }
