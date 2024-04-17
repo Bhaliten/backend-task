@@ -22,12 +22,19 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserSearchResponse findBySearchDto(UserSearchRequest searchRequest) {
-        return null;
-//        return this.repository.searchSimilar(
-//                User.builder().lastName(searchRequest.getLastName()).firstName(searchRequest.getFirstName()).build(),
-//                null,
-//                Pageable.ofSize(100)
-//        );
+    public UserSearchResponse findBySearchRequest(UserSearchRequest searchRequest) {
+        return UserSearchResponse
+                .builder()
+                .userList(this.repository.findByFirstNameLikeAndLastNameLike(
+                                searchRequest.getFirstName(),
+                                searchRequest.getLastName()
+                        )
+                        .stream().map(this.mapper::map).toList())
+                .total(this.repository.countByFirstNameLikeAndLastNameLike(
+                                searchRequest.getFirstName(),
+                                searchRequest.getLastName()
+                        )
+                )
+                .build();
     }
 }

@@ -25,6 +25,6 @@ public class UserController {
 
     @GetMapping("/search")
     public ResponseEntity<UserSearchResponse> search(@Valid UserSearchRequest request) {
-        return ResponseEntity.ok(this.service.findBySearchDto(request));
+        return ResponseEntity.ok(this.service.findBySearchRequest(request));
     }
 }

@@ -7,5 +7,5 @@ import com.euromacc.euromaccservice.dto.UserSearchResponse;
 
 public interface IUserService {
     UserResponse save(CreateUserRequest createUserRequest);
-    UserSearchResponse findBySearchDto(UserSearchRequest searchRequest);
+    UserSearchResponse findBySearchRequest(UserSearchRequest searchRequest);
 }
