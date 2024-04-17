@@ -11,6 +11,8 @@ import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWeb
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import java.util.UUID;
+
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
@@ -35,6 +37,7 @@ class UserControllerTest {
                 .isOk()
                 .expectBody(UserResponse.class)
                 .value(response -> {
+                    Assertions.assertNotNull(response.getId());
                     Assertions.assertEquals(createUserRequest.getEmail(), response.getEmail());
                     Assertions.assertEquals(createUserRequest.getLastName(), response.getLastName());
                     Assertions.assertEquals(createUserRequest.getFirstName(), response.getFirstName());
